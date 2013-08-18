@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
-#include "encoding.hpp"
+#include "encoding/enum.hpp"
+#include "encoding/integer.hpp"
 
 using namespace std;
 
@@ -11,6 +12,6 @@ int main(void)
 
   encoding::EnumCodec<string> codec({"hola","adios"}, "hola");
   cout << codec.encode("hola") << endl;
-  cout << codec.decode(boost::dynamic_bitset<>(1, 0)) << endl;
+  cout << codec.decode(boost::dynamic_bitset<>(1, 1)) << endl;
   return 0;
 }

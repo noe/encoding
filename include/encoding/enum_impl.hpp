@@ -18,10 +18,10 @@ namespace details
 template<typename EnumType>
 EnumCodec<EnumType>::EnumCodec(std::initializer_list<EnumType> possibleValues,
                                EnumType defaultEnumValue)
-  : FieldCodec<EnumType>(details::bits4enum(possibleValues.size())),
+  : Codec<EnumType>(details::bits4enum(possibleValues.size())),
     defaultValue(defaultEnumValue),
     enumValues(possibleValues),
-    auxCodec(FieldCodec<EnumType>::sizeInBits)
+    auxCodec(Codec<EnumType>::sizeInBits)
 {
   typename std::vector<EnumType>::const_iterator
      it = find(enumValues.begin(), enumValues.end(), defaultEnumValue);

@@ -1,36 +1,31 @@
-#include "encoding.hpp"
 
 namespace encoding
 {
 
-///////////////////////////////////////////////////////////////////////////////
+
 UnsignedIntegerCodec::UnsignedIntegerCodec(std::size_t bits)
-  : FieldCodec(bits)
+  : Codec<uint32_t>(bits)
 {
   // do nothing
 }
 
-///////////////////////////////////////////////////////////////////////////////
 boost::dynamic_bitset<> UnsignedIntegerCodec::encode(uint32_t value) const
 {
   return boost::dynamic_bitset<>(sizeInBits, value);
 }
 
-
-///////////////////////////////////////////////////////////////////////////////
 uint32_t UnsignedIntegerCodec::decode(boost::dynamic_bitset<> bits) const
 {
   return bits.to_ulong();
 }
 
-///////////////////////////////////////////////////////////////////////////////
+
 GrayCodec::GrayCodec(std::size_t bits)
-  : FieldCodec(bits)
+  : Codec<uint32_t>(bits)
 {
   // do nothing
 }
 
-///////////////////////////////////////////////////////////////////////////////
 boost::dynamic_bitset<> GrayCodec::encode(uint32_t value) const
 {
   uint32_t grayEncodedValue =  value ^ (value >> 1);
@@ -38,7 +33,6 @@ boost::dynamic_bitset<> GrayCodec::encode(uint32_t value) const
   return normalCodec.encode(grayEncodedValue);
 }
 
-///////////////////////////////////////////////////////////////////////////////
 uint32_t GrayCodec::decode(boost::dynamic_bitset<> bits) const
 {
   UnsignedIntegerCodec normalCodec(sizeInBits);
