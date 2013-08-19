@@ -5,6 +5,12 @@
 
 namespace encoding
 {
+  struct FloatCodec : public Codec<double>
+  {
+    inline FloatCodec();
+    inline boost::dynamic_bitset<> encode(double value) const;
+    inline double decode(boost::dynamic_bitset<> bits) const;
+  };
 
   /////////////////////////////////////////////////////////////////////////////
   /**
@@ -19,4 +25,6 @@ namespace encoding
   };
 
 }
+
+#include "encoding/float_impl.hpp"
 #endif
