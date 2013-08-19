@@ -24,8 +24,9 @@ int main(void)
   cout << "bits: " << c4.sizeInBits << endl;
   cout << c4.decode(c4.encode(1.5f)) << endl;
 
-  std::istringstream buffer("0ab0");
+  std::istringstream buffer({0x01,0x25,0x23,0x53});
   encoding::InputStream input(buffer);
+  cout << "paco: " << input.read(c1) << endl;
   cout << "paco: " << input.read(c1) << endl;
   return 0;
 }

@@ -6,10 +6,9 @@ namespace encoding
 
 InputStream::InputStream (std::istream& in)
   : input(in),
-    buffer(CHAR_BIT, 0),
-    availableBitsInBuffer(0)
+    buffer(0)
 {
-
+  // do nothing
 }
 
 void InputStream::fillBuffer(std::size_t neededBitsFromInput) throw(InputError)
@@ -25,24 +24,16 @@ void InputStream::fillBuffer(std::size_t neededBitsFromInput) throw(InputError)
   }
 
   // Insert bytes from input into the buffer
-  std::size_t newBufferSize = availableBitsInBuffer + (neededBytesFromInput * CHAR_BIT);
+  std::size_t newBufferSize = buffer.size() + (neededBytesFromInput * CHAR_BIT);
   buffer.resize(newBufferSize);
 
-  for (int k = neededBytesFromInput - 1; k >= 0; --k)
+  for (std::size_t k = 0; k < neededBytesFromInput; ++k)
   {
-    if (availableBitsInBuffer > 0)
-    {
-      buffer <<= CHAR_BIT;
-    }
+    unsigned value = bytes[k];
+    const boost::dynamic_bitset<> singleByte(newBufferSize, value);
 
-    using namespace std;
-    cout << "Read from input: " << bytes[k] << endl;
-
-    boost::dynamic_bitset<> singleByte(newBufferSize, bytes[k]);
-
+    buffer <<= CHAR_BIT;
     buffer |= singleByte;
-    buffer &= singleByte;
-    availableBitsInBuffer += CHAR_BIT;
   }
 }
 
@@ -55,23 +46,21 @@ Type InputStream::read(Codec<Type>& codec) throw(InputError)
   std::size_t bitsAlreadyRead = 0;
   std::size_t bitsPendingToBeRead = totalBitsToBeRead;
 
-  std::size_t neededBitsFromInput = availableBitsInBuffer >= totalBitsToBeRead ? 
-                                     0 : totalBitsToBeRead - availableBitsInBuffer;
+  std::size_t neededBitsFromInput = buffer.size() >= totalBitsToBeRead ? 
+                                     0 : totalBitsToBeRead - buffer.size();
 
   if (neededBitsFromInput > 0)
   {
     fillBuffer(neededBitsFromInput);
   }
 
-  std::size_t unusedBits = availableBitsInBuffer - totalBitsToBeRead;
+  std::size_t unusedBits = buffer.size() - totalBitsToBeRead;
 
   boost::dynamic_bitset<> result (buffer);
   result >>= unusedBits;
   result.resize(totalBitsToBeRead);
 
-
   buffer.resize(unusedBits);
-  availableBitsInBuffer = unusedBits;
 
   return codec.decode(result);
 }
