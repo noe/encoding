@@ -25,7 +25,7 @@ namespace encoding
 
       std::ostream& output;
 
-      boost::dynamic_bitset<> buffer;
+      Bitset buffer;
 
       bool closed;
   };

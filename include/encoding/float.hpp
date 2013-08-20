@@ -8,8 +8,8 @@ namespace encoding
   struct FloatCodec : public Codec<double>
   {
     inline FloatCodec();
-    inline boost::dynamic_bitset<> encode(double value) const;
-    inline double decode(boost::dynamic_bitset<> bits) const;
+    inline Bitset encode(double value) const;
+    inline double decode(Bitset bits) const;
   };
 
   /////////////////////////////////////////////////////////////////////////////
@@ -20,8 +20,8 @@ namespace encoding
   struct FixedPointFloatCodec : public Codec<double>
   {
     FixedPointFloatCodec();
-    boost::dynamic_bitset<> encode(double value) const;
-    double decode(boost::dynamic_bitset<> bits) const;
+    Bitset encode(double value) const;
+    double decode(Bitset bits) const;
   };
 
 }

@@ -16,7 +16,7 @@ int main(void)
 
   encoding::EnumCodec<string> c2({"hola","adios"}, "hola");
   cout << c2.encode("hola") << endl;
-  cout << c2.decode(boost::dynamic_bitset<>(1, 1)) << endl;
+  cout << c2.decode(encoding::Bitset(1, 1)) << endl;
 
   encoding::FloatCodec c3;
   cout << c3.decode(c3.encode(1.5f)) << endl;

@@ -21,7 +21,7 @@ OutputStream::~OutputStream()
 template<typename Type>
 void OutputStream::write(Codec<Type>& codec, Type value) throw(OutputError)
 {
-  boost::dynamic_bitset<> encoded = codec.encode(value);
+  Bitset encoded = codec.encode(value);
   if (buffer.empty())
   {
     buffer.swap(encoded);
@@ -47,7 +47,7 @@ void OutputStream::flushInternalBuffer() throw(OutputError)
   std::size_t  bitsToBeWrittenNow =
                  buffer.size() >= CHAR_BIT? CHAR_BIT : 0;
 
-  boost::dynamic_bitset<> tmp;
+  Bitset tmp;
 
   while (bitsToBeWrittenNow > 0)
   {

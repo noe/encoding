@@ -24,7 +24,7 @@ namespace encoding
 
       std::istream& input;
 
-      boost::dynamic_bitset<> buffer;
+      Bitset buffer;
 
       std::size_t availableBitsInBuffer; /* least significant ones */    
   };

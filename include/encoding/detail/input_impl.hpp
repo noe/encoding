@@ -30,7 +30,7 @@ void InputStream::fillBuffer(std::size_t neededBitsFromInput) throw(InputError)
   for (std::size_t k = 0; k < neededBytesFromInput; ++k)
   {
     unsigned value = bytes[k];
-    const boost::dynamic_bitset<> singleByte(newBufferSize, value);
+    const Bitset singleByte(newBufferSize, value);
 
     buffer <<= CHAR_BIT;
     buffer |= singleByte;
@@ -56,7 +56,7 @@ Type InputStream::read(Codec<Type>& codec) throw(InputError)
 
   std::size_t unusedBits = buffer.size() - totalBitsToBeRead;
 
-  boost::dynamic_bitset<> result (buffer);
+  Bitset result (buffer);
   result >>= unusedBits;
   result.resize(totalBitsToBeRead);
 

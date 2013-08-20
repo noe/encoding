@@ -30,7 +30,7 @@ EnumCodec<EnumType>::EnumCodec(std::initializer_list<EnumType> possibleValues,
 
 ///////////////////////////////////////////////////////////////////////////////
 template<typename EnumType>
-boost::dynamic_bitset<> EnumCodec<EnumType>::encode(EnumType value) const
+Bitset EnumCodec<EnumType>::encode(EnumType value) const
 {
   typename std::vector<EnumType>::const_iterator it =
         std::find(enumValues.begin(), enumValues.end(), value);
@@ -41,7 +41,7 @@ boost::dynamic_bitset<> EnumCodec<EnumType>::encode(EnumType value) const
 
 ///////////////////////////////////////////////////////////////////////////////
 template<typename EnumType>
-EnumType EnumCodec<EnumType>::decode(boost::dynamic_bitset<> bits) const
+EnumType EnumCodec<EnumType>::decode(Bitset bits) const
 {
   uint32_t index = auxCodec.decode(bits);
   return index < enumValues.size()? enumValues[index] : defaultValue;

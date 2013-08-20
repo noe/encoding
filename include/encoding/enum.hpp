@@ -15,8 +15,8 @@ namespace encoding
 
     EnumCodec(std::initializer_list<EnumType> possibleValues,
               EnumType defaultEnumValue /* for unsupported bit representations */);
-    boost::dynamic_bitset<> encode(EnumType value) const;
-    EnumType decode(boost::dynamic_bitset<> bits) const;
+    Bitset encode(EnumType value) const;
+    EnumType decode(Bitset bits) const;
   };
 }
 

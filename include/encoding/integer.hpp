@@ -12,8 +12,8 @@ namespace encoding
   struct UnsignedIntegerCodec : public Codec<uint32_t>
   {
     inline UnsignedIntegerCodec(std::size_t bits);
-    inline boost::dynamic_bitset<> encode(uint32_t value) const;
-    inline uint32_t decode(boost::dynamic_bitset<> bits) const;
+    inline Bitset encode(uint32_t value) const;
+    inline uint32_t decode(Bitset bits) const;
   };
 
   /////////////////////////////////////////////////////////////////////////////
@@ -23,8 +23,8 @@ namespace encoding
   struct GrayCodec : public Codec<uint32_t>
   {
     inline GrayCodec(std::size_t bits);
-    inline boost::dynamic_bitset<> encode(uint32_t value) const;
-    inline uint32_t decode(boost::dynamic_bitset<> bits) const;
+    inline Bitset encode(uint32_t value) const;
+    inline uint32_t decode(Bitset bits) const;
   };
 
 // TODO: struct RangeCodec : public Codec<int>
