@@ -6,17 +6,17 @@
 namespace encoding
 {
 
-OutputStream::OutputStream(std::ostream& out)
-  : output(out),
-    buffer(0),
-    closed(false)
+OutputStream::OutputStream(std::ostream& output)
+  : output_(output),
+    buffer_(0),
+    closed_(false)
 {
   // do nothing
 }
 
 OutputStream::~OutputStream()
 {
-  if (!closed)
+  if (!closed_)
   {
     close();
   }
@@ -26,22 +26,19 @@ template<typename Type>
 void OutputStream::write(Codec<Type>& codec, Type value) throw(OutputError)
 {
   Bitset encoded = codec.encode(value);
-  if (buffer.empty())
+  if (buffer_.empty())
   {
-    buffer.swap(encoded);
+    buffer_.swap(encoded);
   }
   else
   {
-    std::size_t newSize = buffer.size() + encoded.size();
-    buffer.resize(newSize);
-    buffer <<= encoded.size();
+    std::size_t newSize = buffer_.size() + encoded.size();
+    buffer_.resize(newSize);
+    buffer_ <<= encoded.size();
 
     encoded.resize(newSize);
-    buffer |= encoded;
+    buffer_ |= encoded;
   }
-
-  using namespace std;
-  cout << "buffer is " << buffer << endl;
 
   flushInternalBuffer();
 }
@@ -49,52 +46,47 @@ void OutputStream::write(Codec<Type>& codec, Type value) throw(OutputError)
 void OutputStream::flushInternalBuffer() throw(OutputError)
 {
   std::size_t  bitsToBeWrittenNow =
-                 buffer.size() >= CHAR_BIT? CHAR_BIT : 0;
+                 buffer_.size() >= CHAR_BIT? CHAR_BIT : 0;
 
   Bitset tmp;
 
   while (bitsToBeWrittenNow > 0)
   {
-    std::size_t bitsLeftUnwritten = buffer.size() - bitsToBeWrittenNow;
-    tmp = buffer >> bitsLeftUnwritten;
+    std::size_t bitsLeftUnwritten = buffer_.size() - bitsToBeWrittenNow;
+    tmp = buffer_ >> bitsLeftUnwritten;
 
     char byteToBeWritten = tmp.to_ulong();
     unsigned long x = tmp.to_ulong();
 
-    using namespace std;
-    cout << "char to be written: " << byteToBeWritten << endl;
-    cout << "...as uling: " << x << endl;
-    cout << "...bits were: " << tmp<< endl;
+    output_.write(&byteToBeWritten, 1);
 
-    output.write(&byteToBeWritten, 1);
-
-    if (!output)
+    if (!output_)
     {
       throw OutputError();
     }
 
-    buffer.resize(bitsLeftUnwritten);
-    bitsToBeWrittenNow = buffer.size() >= CHAR_BIT? CHAR_BIT : 0;
+    buffer_.resize(bitsLeftUnwritten);
+    bitsToBeWrittenNow = buffer_.size() >= CHAR_BIT? CHAR_BIT : 0;
   }
 
 }
 
 void OutputStream::close()
 {
-  closed = true;
+  closed_ = true;
 
-  if (buffer.empty())
+  if (buffer_.empty())
   {
     return;
   }
 
-  std::size_t paddingBits = CHAR_BIT - buffer.size();
-  buffer <<= paddingBits;
+  std::size_t paddingBits = CHAR_BIT - buffer_.size();
+  buffer_ <<= paddingBits;
 
   flushInternalBuffer();
 
-  output.flush();
-  if (!output)
+  output_.flush();
+  if (!output_)
   {
     throw OutputError();
   }

@@ -15,7 +15,7 @@ namespace encoding
   {
     public:
 
-      OutputStream(std::ostream& out);
+      OutputStream(std::ostream& output);
       ~OutputStream();
     
       template<typename Type>
@@ -27,11 +27,11 @@ namespace encoding
 
       void flushInternalBuffer() throw(OutputError);
 
-      std::ostream& output;
+      std::ostream& output_;
 
-      Bitset buffer;
+      Bitset buffer_;
 
-      bool closed;
+      bool closed_;
   };
 }
 

@@ -17,7 +17,7 @@ namespace encoding
 
     public:
 
-      inline InputStream (std::istream& in);
+      inline InputStream (std::istream& input);
 
       template<typename Type>
       Type read(Codec<Type>& codec) throw(InputError);
@@ -26,11 +26,10 @@ namespace encoding
 
       inline void fillBuffer(std::size_t neededBitsFromInput) throw(InputError);
 
-      std::istream& input;
+      std::istream& input_;
 
-      Bitset buffer;
+      Bitset buffer_;
 
-      std::size_t availableBitsInBuffer; /* least significant ones */    
   };
 }
 
