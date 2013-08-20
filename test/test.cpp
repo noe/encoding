@@ -5,6 +5,7 @@
 #include "encoding/integer.hpp"
 #include "encoding/float.hpp"
 #include "encoding/input.hpp"
+#include "encoding/output.hpp"
 
 using namespace std;
 
@@ -24,9 +25,21 @@ int main(void)
   cout << "bits: " << c4.sizeInBits << endl;
   cout << c4.decode(c4.encode(1.5f)) << endl;
 
-  std::istringstream buffer({0x01,0x25,0x23,0x53});
-  encoding::InputStream input(buffer);
+  std::istringstream in({0x01,0x25,0x23,0x53});
+  encoding::InputStream input(in);
   cout << "paco: " << input.read(c1) << endl;
   cout << "paco: " << input.read(c1) << endl;
+
+  encoding::UnsignedIntegerCodec c5(8);  
+  encoding::UnsignedIntegerCodec c6(4);  
+  std::stringstream out;
+  encoding::OutputStream output(out);
+  output.write(c5, 97U);
+  output.write(c5, 98U);
+  output.write(c5, 99U);
+  output.write(c6, 6U);
+  output.write(c6, 4U);
+  output.close();
+  cout << "miau: " << out.str() << endl;
   return 0;
 }
