@@ -1,3 +1,7 @@
+// Copyright (c) 2013, Noe Casas (noe.casas@gmail.com).
+// Distributed under New BSD License.
+// (see accompanying file COPYING)
+
 #ifndef ENCODING_FLOAT_HEADER_SEEN_
 #define ENCODING_FLOAT_HEADER_SEEN_
 

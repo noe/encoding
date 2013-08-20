@@ -1,3 +1,7 @@
+// Copyright (c) 2013, Noe Casas (noe.casas@gmail.com).
+// Distributed under New BSD License.
+// (see accompanying file COPYING)
+
 #ifndef ENCODING_CODEC_HEADER_SEEN__
 #define ENCODING_CODEC_HEADER_SEEN__
 
@@ -17,7 +21,6 @@ namespace encoding
   {
     /** Number of bits of the encoded data */
     const std::size_t sizeInBits;
-
 
     /**************************************************************************
      * Constructor.
