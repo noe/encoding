@@ -30,6 +30,6 @@ namespace encoding
   };
 }
 
-#include "encoding/input_impl.hpp"
+#include "encoding/detail/input_impl.hpp"
 
 #endif

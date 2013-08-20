@@ -31,5 +31,5 @@ namespace encoding
   };
 }
 
-#include "encoding/output_impl.hpp"
+#include "encoding/detail/output_impl.hpp"
 #endif

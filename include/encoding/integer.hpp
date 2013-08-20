@@ -31,6 +31,6 @@ namespace encoding
 
 }
 
-#include "encoding/integer_impl.hpp"
+#include "encoding/detail/integer_impl.hpp"
 
 #endif

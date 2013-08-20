@@ -20,6 +20,6 @@ namespace encoding
   };
 }
 
-#include "enum_impl.hpp"
+#include "encoding/detail/enum_impl.hpp"
 
 #endif

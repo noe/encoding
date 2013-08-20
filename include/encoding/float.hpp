@@ -26,5 +26,5 @@ namespace encoding
 
 }
 
-#include "encoding/float_impl.hpp"
+#include "encoding/detail/float_impl.hpp"
 #endif
