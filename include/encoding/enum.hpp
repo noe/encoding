@@ -19,8 +19,10 @@ namespace encoding
 
     EnumCodec(std::initializer_list<EnumType> possibleValues,
               EnumType defaultEnumValue /* for unsupported bit representations */);
+
     Bitset encode(EnumType value) const;
-    EnumType decode(Bitset bits) const;
+
+    EnumType decode(const Bitset& bits) const;
   };
 }
 

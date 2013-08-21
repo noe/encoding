@@ -17,7 +17,7 @@ namespace encoding
   {
     inline UnsignedIntegerCodec(std::size_t bits);
     inline Bitset encode(uint32_t value) const;
-    inline uint32_t decode(Bitset bits) const;
+    inline uint32_t decode(const Bitset& bits) const;
   };
 
   /////////////////////////////////////////////////////////////////////////////
@@ -28,7 +28,7 @@ namespace encoding
   {
     inline GrayCodec(std::size_t bits);
     inline Bitset encode(uint32_t value) const;
-    inline uint32_t decode(Bitset bits) const;
+    inline uint32_t decode(const Bitset& bits) const;
   };
 
 // TODO: struct RangeCodec : public Codec<int>

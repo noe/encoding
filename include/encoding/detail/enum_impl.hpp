@@ -45,7 +45,7 @@ Bitset EnumCodec<EnumType>::encode(EnumType value) const
 
 ///////////////////////////////////////////////////////////////////////////////
 template<typename EnumType>
-EnumType EnumCodec<EnumType>::decode(Bitset bits) const
+EnumType EnumCodec<EnumType>::decode(const Bitset& bits) const
 {
   uint32_t index = auxCodec.decode(bits);
   return index < enumValues.size()? enumValues[index] : defaultValue;

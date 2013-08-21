@@ -18,7 +18,7 @@ Bitset UnsignedIntegerCodec::encode(uint32_t value) const
   return Bitset(sizeInBits, value);
 }
 
-uint32_t UnsignedIntegerCodec::decode(Bitset bits) const
+uint32_t UnsignedIntegerCodec::decode(const Bitset& bits) const
 {
   return bits.to_ulong();
 }
@@ -37,7 +37,7 @@ Bitset GrayCodec::encode(uint32_t value) const
   return normalCodec.encode(grayEncodedValue);
 }
 
-uint32_t GrayCodec::decode(Bitset bits) const
+uint32_t GrayCodec::decode(const Bitset& bits) const
 {
   UnsignedIntegerCodec normalCodec(sizeInBits);
   const uint32_t grayEncodedValue = normalCodec.decode(bits);

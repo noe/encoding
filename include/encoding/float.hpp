@@ -13,7 +13,7 @@ namespace encoding
   {
     inline FloatCodec();
     inline Bitset encode(double value) const;
-    inline double decode(Bitset bits) const;
+    inline double decode(const Bitset& bits) const;
   };
 
   /////////////////////////////////////////////////////////////////////////////
@@ -25,7 +25,7 @@ namespace encoding
   {
     FixedPointFloatCodec();
     Bitset encode(double value) const;
-    double decode(Bitset bits) const;
+    double decode(const Bitset& bits) const;
   };
 
 }

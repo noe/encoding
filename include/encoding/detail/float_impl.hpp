@@ -41,7 +41,7 @@ Bitset FloatCodec::encode(double value) const
   return bitset;
 }
 
-double FloatCodec::decode(Bitset bits) const
+double FloatCodec::decode(const Bitset& bits) const
 {
   typedef Bitset::block_type block_type;
   std::vector<block_type> blocks; 
@@ -78,7 +78,7 @@ Bitset FixedPointFloatCodec<IntegerPart, FractionalPart>::encode(double value) c
 }
 
 template<std::size_t IntegerPart, std::size_t FractionalPart>
-double FixedPointFloatCodec<IntegerPart, FractionalPart>::decode(Bitset bits) const
+double FixedPointFloatCodec<IntegerPart, FractionalPart>::decode(const Bitset& bits) const
 {
   static const uint32_t one = detail::fixedPointOne<uint32_t, FractionalPart>();
   UnsignedIntegerCodec codec (sizeInBits);

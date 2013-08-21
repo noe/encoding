@@ -40,7 +40,7 @@ namespace encoding
      * \param bits Encoded data to be decoded.
      * \return The decoded piece of data.
      *************************************************************************/
-    virtual Type decode(Bitset bits) const = 0;
+    virtual Type decode(const Bitset& bits) const = 0;
 
     /**************************************************************************
      * Destructor.
