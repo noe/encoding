@@ -14,11 +14,18 @@ OutputStream::OutputStream(std::ostream& output)
   // do nothing
 }
 
-OutputStream::~OutputStream()
+OutputStream::~OutputStream() noexcept(true)
 {
   if (!closed_)
   {
-    close();
+    try
+    {
+      close();
+    }
+    catch (OutputError& error)
+    {
+      // destructors do not throw
+    }
   }
 }
 
@@ -71,7 +78,7 @@ void OutputStream::flushInternalBuffer() throw(OutputError)
 
 }
 
-void OutputStream::close()
+void OutputStream::close() throw(OutputError)
 {
   closed_ = true;
 

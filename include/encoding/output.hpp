@@ -16,12 +16,13 @@ namespace encoding
     public:
 
       OutputStream(std::ostream& output);
-      ~OutputStream();
+
+      ~OutputStream() noexcept(true);
     
       template<typename Type>
       void write(Codec<Type>& codec, Type value) throw(OutputError);
 
-      void close();
+      void close() throw(OutputError);
 
     private:
 
