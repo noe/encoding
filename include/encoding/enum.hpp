@@ -10,19 +10,28 @@
 
 namespace encoding
 {
+  /****************************************************************************
+   * Implementation of Codec for a finite set of elements of whatever type.
+   * It is templatized with the type of the elements of the enumeration.
+   ***************************************************************************/
   template<typename EnumType>
   struct EnumCodec : public Codec<EnumType>
   {
-    const EnumType defaultValue;
-    const std::vector<EnumType> enumValues;
-    UnsignedIntegerCodec auxCodec;
 
     EnumCodec(std::initializer_list<EnumType> possibleValues,
               EnumType defaultEnumValue /* for unsupported bit representations */);
 
-    Bitset encode(EnumType value) const;
+    Bitset encode(EnumType value) const override;
 
-    EnumType decode(const Bitset& bits) const;
+    EnumType decode(const Bitset& bits) const override;
+
+   private: 
+
+    UnsignedIntegerCodec auxCodec;
+
+    const EnumType defaultValue;
+
+    const std::vector<EnumType> enumValues;
   };
 }
 

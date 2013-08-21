@@ -9,26 +9,29 @@
 
 namespace encoding
 {
-  /////////////////////////////////////////////////////////////////////////////
-  /**
-   ** 
-   **//////////////////////////////////////////////////////////////////////////
+  /****************************************************************************
+   * Implementation of Codec for uint32_t that uses 2's compliment
+   * representation.
+   ***************************************************************************/
   struct UnsignedIntegerCodec : public Codec<uint32_t>
   {
     inline UnsignedIntegerCodec(std::size_t bits);
-    inline Bitset encode(uint32_t value) const;
-    inline uint32_t decode(const Bitset& bits) const;
+
+    inline Bitset encode(uint32_t value) const override;
+
+    inline uint32_t decode(const Bitset& bits) const override;
   };
 
-  /////////////////////////////////////////////////////////////////////////////
-  /**
-   ** 
-   **//////////////////////////////////////////////////////////////////////////
+  /****************************************************************************
+   * Implementation of Codec for uint32_t that uses Gray code representation.
+   ***************************************************************************/
   struct GrayCodec : public Codec<uint32_t>
   {
     inline GrayCodec(std::size_t bits);
-    inline Bitset encode(uint32_t value) const;
-    inline uint32_t decode(const Bitset& bits) const;
+
+    inline Bitset encode(uint32_t value) const override;
+
+    inline uint32_t decode(const Bitset& bits) const override;
   };
 
 // TODO: struct RangeCodec : public Codec<int>

@@ -63,7 +63,6 @@ void OutputStream::flushInternalBuffer() throw(OutputError)
     tmp = buffer_ >> bitsLeftUnwritten;
 
     char byteToBeWritten = tmp.to_ulong();
-    unsigned long x = tmp.to_ulong();
 
     output_.write(&byteToBeWritten, 1);
 
