@@ -27,11 +27,11 @@ namespace encoding
 
    private: 
 
-    UnsignedIntegerCodec auxCodec;
-
     const EnumType defaultValue;
 
     const std::vector<EnumType> enumValues;
+
+    UnsignedIntegerCodec auxCodec;
   };
 }
 

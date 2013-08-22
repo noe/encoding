@@ -14,7 +14,13 @@ namespace details
 {
   inline std::size_t bits4enum(std::size_t numElements)
   {
-    return std::size_t(std::log2(float(numElements)));
+    unsigned int maxRepresentableIndex = numElements - 1;
+    unsigned int bitsNeeded = 0;
+    while (maxRepresentableIndex >>= 1)
+    {
+      bitsNeeded++;
+    }
+    return bitsNeeded + 1;
   }
 }
 

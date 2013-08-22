@@ -2,11 +2,8 @@
 // Distributed under New BSD License.
 // (see accompanying file COPYING)
 
-#include <iostream>
-#include <sstream>
-#include <string>
-#include <ctime>
-#include <cstdlib>
+
+#include "test_functions.hpp"
 
 #include "encoding/enum.hpp"
 #include "encoding/integer.hpp"
@@ -14,81 +11,14 @@
 #include "encoding/input.hpp"
 #include "encoding/output.hpp"
 
+#include <iostream>
+#include <sstream>
+#include <string>
+#include <ctime>
+#include <cstdlib>
+
 using namespace std;
 using namespace encoding;
-
-/*****************************************************************************/
-template<typename Type>
-void testEncode(const Codec<Type>& codec,
-                Type value,
-                const std::string& bits)
-{
-  encoding::Bitset obtainedBits = codec.encode(value);
-  if (obtainedBits == Bitset(bits))
-  {
-    cout << "[PASS] Encoded " << value
-         << " and obtained " << bits
-         << endl;
-  }
-  else
-  {
-    cout << "[FAIL] Encoded " << value
-         << " and obtained " << obtainedBits
-         << " but expected " << bits
-         << endl;
-  }
-}
-
-/*****************************************************************************/
-template<typename Type>
-void testDecode(const Codec<Type>& codec,
-                Type value,
-                const std::string& bits)
-{
-  Type obtainedValue = codec.decode(Bitset(bits));
-  if (obtainedValue == value)
-  {
-    cout << "[PASS] Decoded " << bits 
-         << " and obtained " << value
-         << endl;
-  }
-  else
-  {
-    cout << "[FAIL] Decoded " << bits
-         << " and obtained " << obtainedValue
-         << " but expected " << value
-         << endl;
-  }
-}
-
-/*****************************************************************************/
-template<typename Type>
-void testRoundtripValue(const Codec<Type>& codec, Type value)
-{
-  Type roundtripValue = codec.decode(codec.encode(value));
-
-  if (roundtripValue == value)
-  {
-    cout << "[PASS] Rountrip converted " << value
-         << endl;
-  }
-  else
-  {
-    cout << "[FAIL] Roundtrip converted " << value
-         << " and obtained " << roundtripValue
-         << endl;
-  }
-}
-
-/*****************************************************************************/
-template<typename Type>
-void testEncodeAndDecode(const Codec<Type>& codec,
-                         Type value,
-                         const std::string& bits)
-{
-  testEncode (codec, value, bits);
-  testDecode (codec, value, bits);
-}
 
 /*****************************************************************************/
 void testUnsignedIntegerRandomRoundtrip()
@@ -131,13 +61,19 @@ void testUnsigned ()
   testEncodeAndDecode (UnsignedIntegerCodec(1), uint32_t(1), "1");
   testEncodeAndDecode (UnsignedIntegerCodec(11), uint32_t(1024), "10000000000");
   testEncodeAndDecode (UnsignedIntegerCodec(16), uint32_t(1024), "0000010000000000");
-
   testUnsignedIntegerRandomRoundtrip();
-
   testUnsignedIntegerEncodePerformance();
 }
 
 /*****************************************************************************/
+void testEnum ()
+{
+  testEncodeAndDecode(EnumCodec<string>({"a","b","c"},"a"), string("a"), "00");
+  testEncodeAndDecode(EnumCodec<string>({"a","b","c"},"a"), string("b"), "01");
+  testEncodeAndDecode(EnumCodec<string>({"a","b","c"},"a"), string("c"), "10");
+  testDecode(EnumCodec<string>({"a","b","c"},"a"), string("a"), "11");
+}
+
 /*****************************************************************************/
 /*****************************************************************************/
 
@@ -145,6 +81,8 @@ void testUnsigned ()
 int main(void)
 {
   testUnsigned();
+  testEnum();
+
 /*
   encoding::EnumCodec<string> c2({"hola","adios"}, "hola");
   cout << c2.encode("hola") << endl;
