@@ -5,6 +5,7 @@
 
 #include "test_integer.hpp"
 #include "test_enum.hpp"
+#include "test_float.hpp"
 
 #include "encoding/enum.hpp"
 #include "encoding/float.hpp"
@@ -27,8 +28,9 @@ using namespace encoding;
 
 int main(void)
 {
-  testUnsigned();
-  testEnum();
+  testUnsigned ();
+  testEnum ();
+  testFloat ();
 
 /*
   encoding::EnumCodec<string> c2({"hola","adios"}, "hola");
