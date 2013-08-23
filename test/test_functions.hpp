@@ -2,13 +2,16 @@
 // Distributed under New BSD License.
 // (see accompanying file COPYING)
 
+#ifndef TEST_FUNCTIONS_HEADER_SEEN__
+#define TEST_FUNCTIONS_HEADER_SEEN__
+
 #include "encoding/codec.hpp"
 #include <iostream>
 #include <string>
 
 /*****************************************************************************/
 template<typename Type>
-void testEncode(const encoding::Codec<Type>& codec,
+inline void testEncode(const encoding::Codec<Type>& codec,
                 const Type& value,
                 const std::string& bits)
 {
@@ -30,7 +33,7 @@ void testEncode(const encoding::Codec<Type>& codec,
 
 /*****************************************************************************/
 template<typename Type>
-void testDecode(const encoding::Codec<Type>& codec,
+inline void testDecode(const encoding::Codec<Type>& codec,
                 const Type& value,
                 const std::string& bits)
 {
@@ -52,7 +55,7 @@ void testDecode(const encoding::Codec<Type>& codec,
 
 /*****************************************************************************/
 template<typename Type>
-void testRoundtripValue(const encoding::Codec<Type>& codec, const Type& value)
+inline void testRoundtripValue(const encoding::Codec<Type>& codec, const Type& value)
 {
   Type roundtripValue = codec.decode(codec.encode(value));
 
@@ -71,10 +74,12 @@ void testRoundtripValue(const encoding::Codec<Type>& codec, const Type& value)
 
 /*****************************************************************************/
 template<typename Type>
-void testEncodeAndDecode(const encoding::Codec<Type>& codec,
+inline void testEncodeAndDecode(const encoding::Codec<Type>& codec,
                          const Type& value,
                          const std::string& bits)
 {
   testEncode (codec, value, bits);
   testDecode (codec, value, bits);
 }
+
+#endif
