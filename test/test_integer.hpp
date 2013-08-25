@@ -50,3 +50,8 @@ void testUnsigned ()
   testUnsignedIntegerRandomRoundtrip();
   testUnsignedIntegerEncodePerformance();
 }
+
+void testRange ()
+{
+  testEncodeAndDecode (encoding::RangeCodec(-45,423), int32_t(-45), "00000000000000000000000000000000");
+}

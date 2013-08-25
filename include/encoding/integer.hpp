@@ -34,7 +34,19 @@ namespace encoding
     inline uint32_t decode(const Bitset& bits) const override;
   };
 
-// TODO: struct RangeCodec : public Codec<int>
+  /****************************************************************************
+   * Implementation of Codec for ints that uses Gray code representation.
+   ***************************************************************************/
+  struct RangeCodec : public Codec<int32_t>
+  {
+    inline RangeCodec(int32_t min, int32_t max);
+
+    inline Bitset encode(int32_t value) const override;
+
+    inline int32_t decode(const Bitset& bits) const override;
+
+    private: const int32_t offset_; const GrayCodec auxCodec_;
+  };
 
 }
 

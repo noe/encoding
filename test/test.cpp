@@ -28,8 +28,16 @@ using namespace encoding;
 
 int main(void)
 {
+  cout << "** TEST UNSIGNED CODECS ************************************************" << endl;
   testUnsigned ();
+
+  cout << "** TEST RANGE CODECS ***************************************************" << endl;
+  testRange ();
+
+  cout << "** TEST ENUM CODECS ****************************************************" << endl;
   testEnum ();
+
+  cout << "** TEST FLOAT CODECS ***************************************************" << endl;
   testFloat ();
 
 /*
