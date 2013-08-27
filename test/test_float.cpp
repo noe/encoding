@@ -6,8 +6,10 @@
 #include <iostream>
 #include <string>
 
+#include <gtest/gtest.h>
+
 /*****************************************************************************/
-void testDoubleRandomRoundtrip()
+TEST(TestDouble, RandomRoundtrip)
 {
   srand (time(0));
   for (std::size_t i = 0; i < 5; ++i)
@@ -23,7 +25,7 @@ void testDoubleRandomRoundtrip()
 }
 
 /*****************************************************************************/
-void testDoubleEncodePerformance()
+TEST(TestDouble, EncodePerformance)
 {
   const std::size_t performanceSamples = 10000000;
   encoding::UnsignedIntegerCodec codec(32);
@@ -36,16 +38,6 @@ void testDoubleEncodePerformance()
   }
   clock_t end = clock();
   double elapsedmsecs = 1000.0 * double(end - begin) / CLOCKS_PER_SEC;
-  std::cout << "Double encode time: "
-            << (1000 * elapsedmsecs / performanceSamples) << "usecs "
-            << "( " << performanceSamples << " samples )"
-            << std::endl;
+  double encodeTime = 1000 * elapsedmsecs / performanceSamples;
+  EXPECT_LT(encodeTime, 1.0);
 }
-
-/*****************************************************************************/
-void testFloat()
-{
-  testDoubleRandomRoundtrip();
-  testDoubleEncodePerformance();
-}
-

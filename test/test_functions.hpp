@@ -6,8 +6,9 @@
 #define TEST_FUNCTIONS_HEADER_SEEN__
 
 #include "encoding/codec.hpp"
-#include <iostream>
-#include <string>
+
+#include <gtest/gtest.h>
+
 
 /*****************************************************************************/
 template<typename Type>
@@ -16,19 +17,7 @@ inline void testEncode(const encoding::Codec<Type>& codec,
                 const std::string& bits)
 {
   encoding::Bitset obtainedBits = codec.encode(value);
-  if (obtainedBits == encoding::Bitset(bits))
-  {
-    std::cout << "[PASS] Encoded " << value
-              << " and obtained " << bits
-              << std::endl;
-  }
-  else
-  {
-    std::cout << "[FAIL] Encoded " << value
-         << " and obtained " << obtainedBits
-         << " but expected " << bits
-         << std::endl;
-  }
+  ASSERT_EQ(obtainedBits, encoding::Bitset(bits));
 }
 
 /*****************************************************************************/
@@ -38,19 +27,7 @@ inline void testDecode(const encoding::Codec<Type>& codec,
                 const std::string& bits)
 {
   Type obtainedValue = codec.decode(encoding::Bitset(bits));
-  if (obtainedValue == value)
-  {
-    std::cout << "[PASS] Decoded " << bits 
-              << " and obtained " << value
-              << std::endl;
-  }
-  else
-  {
-    std::cout << "[FAIL] Decoded " << bits
-              << " and obtained " << obtainedValue
-              << " but expected " << value
-              << std::endl;
-  }
+  ASSERT_EQ(obtainedValue, value);
 }
 
 /*****************************************************************************/
@@ -58,18 +35,7 @@ template<typename Type>
 inline void testRoundtripValue(const encoding::Codec<Type>& codec, const Type& value)
 {
   Type roundtripValue = codec.decode(codec.encode(value));
-
-  if (roundtripValue == value)
-  {
-    std::cout << "[PASS] Rountrip converted " << value
-              << std::endl;
-  }
-  else
-  {
-    std::cout << "[FAIL] Roundtrip converted " << value
-              << " and obtained " << roundtripValue
-              << std::endl;
-  }
+  ASSERT_EQ(roundtripValue, value);
 }
 
 /*****************************************************************************/

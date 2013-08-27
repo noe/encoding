@@ -6,8 +6,19 @@
 #include <iostream>
 #include <string>
 
+#include <gtest/gtest.h>
+
 /*****************************************************************************/
-void testUnsignedIntegerRandomRoundtrip()
+TEST(TestUnsigned, SimpleConversions)
+{
+  testEncodeAndDecode (encoding::UnsignedIntegerCodec(1), uint32_t(0), "0");
+  testEncodeAndDecode (encoding::UnsignedIntegerCodec(1), uint32_t(1), "1");
+  testEncodeAndDecode (encoding::UnsignedIntegerCodec(11), uint32_t(1024), "10000000000");
+  testEncodeAndDecode (encoding::UnsignedIntegerCodec(16), uint32_t(1024), "0000010000000000");
+}
+
+/*****************************************************************************/
+TEST(TestUnsigned, RandomRoundtrip)
 {
   srand (time(0));
   for (std::size_t i = 0; i < 5; ++i)
@@ -23,7 +34,7 @@ void testUnsignedIntegerRandomRoundtrip()
 }
 
 /*****************************************************************************/
-void testUnsignedIntegerEncodePerformance()
+TEST(TestUnsigned, EncodePerformance)
 {
   const std::size_t performanceSamples = 10000000;
   encoding::UnsignedIntegerCodec codec(32);
@@ -34,24 +45,13 @@ void testUnsignedIntegerEncodePerformance()
   }
   clock_t end = clock();
   double elapsedmsecs = 1000.0 * double(end - begin) / CLOCKS_PER_SEC;
-  std::cout << "Unsigned integer encode time: "
-            << (1000 * elapsedmsecs / performanceSamples) << "usecs "
-            << "( " << performanceSamples << " samples )"
-            << std::endl;
+
+  double encodeTime = 1000 * elapsedmsecs / performanceSamples;
+  EXPECT_LT(encodeTime, 1.0);
 }
 
 /*****************************************************************************/
-void testUnsigned ()
-{
-  testEncodeAndDecode (encoding::UnsignedIntegerCodec(1), uint32_t(0), "0");
-  testEncodeAndDecode (encoding::UnsignedIntegerCodec(1), uint32_t(1), "1");
-  testEncodeAndDecode (encoding::UnsignedIntegerCodec(11), uint32_t(1024), "10000000000");
-  testEncodeAndDecode (encoding::UnsignedIntegerCodec(16), uint32_t(1024), "0000010000000000");
-  testUnsignedIntegerRandomRoundtrip();
-  testUnsignedIntegerEncodePerformance();
-}
-
-void testRange ()
+TEST(TestRange, SimpleConversions)
 {
   testEncodeAndDecode (encoding::RangeCodec(-45,423), int32_t(-45), "00000000000000000000000000000000");
 }

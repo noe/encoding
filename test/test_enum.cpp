@@ -6,8 +6,10 @@
 #include <iostream>
 #include <string>
 
+#include <gtest/gtest.h>
+
 /*****************************************************************************/
-void testEnum ()
+TEST (TestEnum, SimpleConversions)
 {
   using namespace std;
   using namespace encoding;
